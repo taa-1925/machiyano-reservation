@@ -7,7 +7,7 @@ export const POST: APIRoute = async ({ request, url }) => {
     const body = await request.json();
     const { date, time, party, seat, name, email, phone } = body;
 
-    if (!date || !time || !party || !name || !email || !phone) {
+    if (!date || !time || !party || !name || !email) {
       return new Response(JSON.stringify({ error: "必須項目が入力されていません。" }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
@@ -18,9 +18,6 @@ export const POST: APIRoute = async ({ request, url }) => {
     const gmailPass = import.meta.env.GMAIL_APP_PASSWORD;
     const storeEmail = import.meta.env.STORE_EMAIL || "machiya.no.omise@gmail.com";
     const secret = import.meta.env.APPROVAL_SECRET;
-
-    console.log("DEBUG GMAIL_USER:", gmailUser);
-    console.log("DEBUG GMAIL_PASS_LENGTH:", gmailPass?.length);
 
     if (!gmailUser || !gmailPass || !secret) {
       return new Response(JSON.stringify({ error: "サーバーのGmail設定が未完了です。" }), {
@@ -36,7 +33,7 @@ export const POST: APIRoute = async ({ request, url }) => {
       seat: String(seat || "どちらでもよい"),
       name: String(name),
       email: String(email),
-      phone: String(phone),
+      phone: phone ? String(phone) : "未入力",
       createdAt: Date.now(),
     };
 
@@ -52,7 +49,7 @@ export const POST: APIRoute = async ({ request, url }) => {
       },
     });
 
-    // 1. 店側（machiya.no.omise@gmail.com）へ予約リクエスト通知＆受諾リンクを送信
+    // 1. 店側へ予約リクエスト通知＆受諾リンクを送信
     await transporter.sendMail({
       from: `"マチヤノオミセ 予約システム" <${gmailUser}>`,
       to: storeEmail,
