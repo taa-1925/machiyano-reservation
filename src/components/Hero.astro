@@ -1,0 +1,1304 @@
+---
+const gallerySlides = Array.from({ length: 14 }, (_, i) => {
+  const num = i + 1;
+  const fallbacks = [
+    "linear-gradient(135deg, #d6cec2 0%, #9e9384 100%)",
+    "linear-gradient(135deg, #c7bfb2 0%, #8a8072 100%)",
+    "linear-gradient(135deg, #bdb4a6 0%, #7d7365 100%)",
+    "linear-gradient(135deg, #b3aa9c 0%, #73695b 100%)",
+    "linear-gradient(135deg, #cbc3b6 0%, #8f8577 100%)",
+    "linear-gradient(135deg, #bfb7aa 0%, #82786a 100%)",
+    "linear-gradient(135deg, #d1c9bc 0%, #968c7e 100%)",
+  ];
+  return {
+    src: `/images/gallery-${num}.JPG`,
+    alt: `マチヤノオミセ ギャラリー ${num}`,
+    fallbackBg: fallbacks[i % fallbacks.length],
+  };
+});
+---
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+
+<div class="machiya-root">
+  <!-- 1. 最上部メインヒーロー -->
+  <header class="hero-banner">
+    <img
+      src="/images/hero-main.jpg"
+      alt="マチヤノオミセ"
+      class="hero-bg-img"
+      onerror="this.style.display='none'"
+    />
+    <div class="hero-overlay"></div>
+    <div class="hero-text-box">
+      <p class="hero-sub-en">Machiya no Omise</p>
+      <h1 class="hero-title-ja">マチヤノオミセ</h1>
+      <span class="hero-divider"></span>
+      <p class="hero-caption">三重県津市の古民家カフェ — ご予約フォーム</p>
+    </div>
+  </header>
+
+  <!-- 2. タイトル下のフルワイド自動フェードギャラリー（14枚・.JPG対応） -->
+  <section class="gallery-section reveal-side" aria-label="店舗写真ギャラリー">
+    <div class="fade-stage" id="fadeStage">
+      {gallerySlides.map((slide, index) => (
+        <div
+          class={`fade-slide ${index === 0 ? "is-active" : ""}`}
+          style={`background: ${slide.fallbackBg};`}
+        >
+          <img
+            src={slide.src}
+            alt={slide.alt}
+            onerror="this.style.display='none'"
+          />
+        </div>
+      ))}
+
+      <!-- 右下の円形ページ番号バッジ -->
+      <div class="circle-counter" aria-live="polite">
+        <span class="counter-current" id="counterCurrent">1</span>
+        <span class="counter-sep">/</span>
+        <span class="counter-total">{gallerySlides.length}</span>
+      </div>
+
+      <!-- 下部ドットナビ（14枚対応） -->
+      <div class="fade-dots" id="fadeDots">
+        {gallerySlides.map((_, index) => (
+          <button
+            type="button"
+            class={`dot ${index === 0 ? "is-active" : ""}`}
+            data-index={index}
+            aria-label={`${index + 1}枚目の写真へ`}
+          ></button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Access セクション（白背景・画面中央） -->
+  <section class="access-section" aria-label="Access">
+    <div class="access-container">
+      <h2 class="access-heading reveal-side">Access</h2>
+
+      <div class="access-grid">
+        <div class="map-box reveal-side" style="--delay: 0.2s;">
+          <iframe
+            title="マチヤノオミセ 地図"
+            src="https://maps.google.com/maps?q=三重県津市栗真町屋町792&t=&z=16&ie=UTF8&iwloc=&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <div class="info-box reveal-side-right" style="--delay: 0.4s;">
+          <div class="info-group">
+            <div class="info-line">
+              <span class="info-label">OPEN</span>
+              <span class="info-value">11:00 〜 17:00</span>
+            </div>
+            <div class="info-line">
+              <span class="info-label">RESERVE</span>
+              <span class="info-value">10:30 / 11:00<small>（各枠1日1件限定）</small></span>
+            </div>
+            <div class="info-line">
+              <span class="info-label">CLOSED</span>
+              <span class="info-value">火曜日・水曜日<small>（ほか不定休あり）</small></span>
+            </div>
+          </div>
+
+          <div class="info-group">
+            <div class="info-line">
+              <span class="info-label">ADDRESS</span>
+              <div class="info-value">
+                <p class="addr-p">
+                  〒514-0102<br />
+                  三重県津市栗真町屋町792<small>（三重大学近く）</small>
+                </p>
+                <a
+                  href="https://maps.google.com/?q=三重県津市栗真町屋町792"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="gmap-link"
+                >
+                  Google Maps
+                </a>
+              </div>
+            </div>
+            <div class="info-line">
+              <span class="info-label">PARKING</span>
+              <span class="info-value">約8台</span>
+            </div>
+            <div class="info-line">
+              <span class="info-label">PAYMENT</span>
+              <span class="info-value">現金・PayPay</span>
+            </div>
+          </div>
+
+          <p class="info-footer-note">
+            お席のご予約は下記フォームより承っております。<br />
+            なお、予約枠が埋まっている場合でも、当日そのままご来店いただければお席へご案内できる可能性がございます。どうぞお気軽にお越しください。<br />
+            ご不明な点がございましたらお気軽にお問い合わせください。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. ご予約の流れ ＆ 5. 予約フォーム本体 -->
+  <main class="form-wrapper">
+    <section class="flow-section">
+      <h3 class="flow-heading reveal-side">Reservation Flow</h3>
+      <div class="flow-list">
+        <div class="flow-item reveal-side" style="--delay: 0.15s;">
+          <div class="flow-item-head">
+            <span class="flow-step-num">01</span>
+            <span class="flow-step-title">予約希望を送る</span>
+          </div>
+          <p class="flow-item-desc">
+            下のフォームで日時・人数・お名前などを入力して送信してください。送信後すぐに受付確認メールが届きます。
+          </p>
+        </div>
+
+        <div class="flow-item reveal-side" style="--delay: 0.35s;">
+          <div class="flow-item-head">
+            <span class="flow-step-num">02</span>
+            <span class="flow-step-title">お店が確認します</span>
+          </div>
+          <p class="flow-item-desc">
+            席の空き状況を確認します。各時間枠は1日1件のみのため、すでに埋まっている場合は別の時間をご案内します。この時点ではまだ予約は確定していません。
+          </p>
+        </div>
+
+        <div class="flow-item reveal-side" style="--delay: 0.55s;">
+          <div class="flow-item-head">
+            <span class="flow-step-num">03</span>
+            <span class="flow-step-title">確定の返事が届いたら予約完了</span>
+          </div>
+          <p class="flow-item-desc">
+            お店から確定メールが届き次第、予約成立となります。返信がない場合はお手数ですがお電話またはメールにて再度ご連絡ください。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-card reveal-side" style="--delay: 0.2s;">
+      <form id="reservationForm" novalidate>
+        <div class="form-block">
+          <div class="block-head">
+            <span class="block-label">ご希望日</span>
+            <span class="req-pill">必須</span>
+          </div>
+          <p class="step-sub">STEP 1</p>
+          <p class="step-help">
+            定休日（火・水）と過去の日付は選べません。不定休の日は、確認の返事の際にお知らせします。
+          </p>
+
+          <div class="calendar-panel">
+            <div class="cal-header">
+              <button type="button" class="cal-nav-btn" id="prevMonth" aria-label="前の月">←</button>
+              <span class="cal-title" id="calMonthLabel">2026年 11月</span>
+              <button type="button" class="cal-nav-btn" id="nextMonth" aria-label="次の月">→</button>
+            </div>
+
+            <div class="cal-weekdays">
+              <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
+            </div>
+            <div class="cal-days" id="calendarGrid"></div>
+
+            <div class="cal-legend">
+              <span><i class="lg-box is-open"></i>選択できます</span>
+              <span><i class="lg-box is-closed"></i>定休日・選択不可</span>
+              <span><i class="lg-box is-selected"></i>選択中</span>
+            </div>
+          </div>
+          <input type="hidden" id="selectedDate" name="date" required />
+        </div>
+
+        <div class="form-block">
+          <div class="block-head">
+            <span class="block-label">ご来店時間</span>
+            <span class="req-pill">必須</span>
+          </div>
+          <p class="step-sub">STEP 2</p>
+          <div class="time-grid" id="timeChoices">
+            <button type="button" class="time-btn" data-value="10:30">10:30</button>
+            <button type="button" class="time-btn" data-value="11:00">11:00</button>
+          </div>
+          <input type="hidden" id="selectedTime" name="time" required />
+        </div>
+
+        <div class="form-block">
+          <div class="block-head">
+            <span class="block-label">ご利用人数・お席のご希望</span>
+            <span class="req-pill">必須</span>
+          </div>
+          <p class="step-sub">STEP 3</p>
+          <div class="select-grid">
+            <div class="field-col">
+              <label for="partySelect">人数</label>
+              <select id="partySelect" name="party" required>
+                <option value="1">1名</option>
+                <option value="2" selected>2名</option>
+                <option value="3">3名</option>
+                <option value="4">4名</option>
+                <option value="5">5名</option>
+                <option value="6">6名（要相談）</option>
+              </select>
+            </div>
+            <div class="field-col">
+              <label for="seatSelect">お席</label>
+              <select id="seatSelect" name="seat">
+                <option value="どちらでもよい">どちらでもよい</option>
+                <option value="テーブル席">テーブル席</option>
+                <option value="座敷・小上がり">座敷・小上がり</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-block">
+          <div class="block-head">
+            <span class="block-label">お客様情報</span>
+          </div>
+          <p class="step-sub">STEP 4</p>
+
+          <div class="input-list">
+            <div class="field-col">
+              <label for="guestName" class="field-label-row">
+                <span>お名前（フルネーム）</span>
+                <span class="req-pill">必須</span>
+              </label>
+              <input type="text" id="guestName" name="name" placeholder="例：山田 花子" required />
+            </div>
+            <div class="field-col">
+              <label for="guestEmail" class="field-label-row">
+                <span>メールアドレス（確定メール送信先）</span>
+                <span class="req-pill">必須</span>
+              </label>
+              <input type="email" id="guestEmail" name="email" placeholder="example@gmail.com" required />
+            </div>
+            <div class="field-col">
+              <label for="guestPhone" class="field-label-row">
+                <span>お電話番号</span>
+                <span class="opt-pill">任意</span>
+              </label>
+              <input type="tel" id="guestPhone" name="phone" placeholder="090-1234-5678" />
+            </div>
+          </div>
+        </div>
+
+        <p id="formMessage" class="form-msg" role="alert"></p>
+
+        <button type="submit" class="submit-action" id="submitBtn">
+          この内容で予約希望を送る
+        </button>
+      </form>
+    </section>
+  </main>
+</div>
+
+<style is:global>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #2b2b2b;
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+</style>
+
+<style>
+  .machiya-root {
+    width: 100%;
+    background-color: #ffffff;
+    color: #2b2b2b;
+    padding-bottom: 96px;
+    overflow-x: hidden;
+    animation: pageFadeIn 1.4s ease-out forwards;
+  }
+
+  @keyframes pageFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .reveal-side {
+    opacity: 0;
+    transform: translateX(-32px);
+    transition:
+      opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s),
+      transform 1.8s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s);
+  }
+
+  .reveal-side-right {
+    opacity: 0;
+    transform: translateX(32px);
+    transition:
+      opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s),
+      transform 1.8s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0s);
+  }
+
+  .reveal-side.is-visible,
+  .reveal-side-right.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .hero-banner {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #433d36 0%, #2a2e2b 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .hero-banner {
+      height: 500px;
+    }
+  }
+
+  .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: heroSlideIn 2.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 18, 16, 0.34);
+  }
+
+  .hero-text-box {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #ffffff;
+    padding: 30px 44px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: rgba(24, 24, 22, 0.22);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    animation: slideFadeLeft 1.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  }
+
+  .hero-sub-en {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    margin: 0 0 10px;
+    opacity: 0;
+    animation: slideFadeLeft 1.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+  }
+
+  .hero-title-ja {
+    font-family: "Shippori Mincho", "Hiragino Mincho ProN", serif;
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-indent: 0.32em;
+    margin: 0;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    animation: slideFadeLeft 1.8s cubic-bezier(0.16, 1, 0.3, 1) 1.05s forwards;
+  }
+
+  @media (min-width: 768px) {
+    .hero-title-ja {
+      font-size: 34px;
+    }
+  }
+
+  .hero-divider {
+    display: block;
+    width: 36px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.75);
+    margin: 16px auto;
+    opacity: 0;
+    transform: scaleX(0);
+    animation: expandLine 1.5s cubic-bezier(0.16, 1, 0.3, 1) 1.35s forwards;
+  }
+
+  .hero-caption {
+    font-family: "Shippori Mincho", serif;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    margin: 0;
+    opacity: 0;
+    animation: slideFadeLeft 1.7s cubic-bezier(0.16, 1, 0.3, 1) 1.65s forwards;
+  }
+
+  @keyframes heroSlideIn {
+    0% {
+      opacity: 0.35;
+      transform: scale(1.04) translateX(18px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateX(0);
+    }
+  }
+
+  @keyframes slideFadeLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-26px);
+    }
+    100% {
+      opacity: 0.96;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes expandLine {
+    0% {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    100% {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+
+  .gallery-section {
+    position: relative;
+    width: 100%;
+    margin-top: 2px;
+    background-color: #f5f5f3;
+  }
+
+  .fade-stage {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .fade-stage {
+      height: 540px;
+    }
+  }
+
+  .fade-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    pointer-events: none;
+  }
+
+  .fade-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+  }
+
+  .fade-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .circle-counter {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    z-index: 3;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background: rgba(24, 24, 22, 0.38);
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    font-family: "Cormorant Garamond", serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    letter-spacing: 0.02em;
+  }
+
+  .counter-current {
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .counter-sep {
+    font-size: 12px;
+    opacity: 0.7;
+  }
+
+  .counter-total {
+    font-size: 12px;
+    opacity: 0.85;
+  }
+
+  .fade-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: 7px;
+    max-width: 65%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .dot.is-active {
+    background: #ffffff;
+    transform: scale(1.3);
+  }
+
+  .access-section {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 80px 24px 64px;
+  }
+
+  .access-container {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  .access-heading {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 38px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: #2f3b32;
+    margin: 0 0 40px;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .access-heading {
+      text-align: left;
+      font-size: 42px;
+    }
+  }
+
+  .access-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .access-grid {
+      grid-template-columns: 1.08fr 1fr;
+      gap: 52px;
+    }
+  }
+
+  .map-box {
+    width: 100%;
+    height: 300px;
+    border: 1px solid #e6e6e4;
+    overflow: hidden;
+    background: #f7f7f5;
+  }
+
+  @media (min-width: 768px) {
+    .map-box {
+      height: 360px;
+    }
+  }
+
+  .map-box iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  .info-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-group {
+    padding: 20px 0;
+    border-top: 1px solid #e2e2df;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .info-line {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    font-size: 13.5px;
+    line-height: 1.75;
+  }
+
+  .info-label {
+    width: 76px;
+    flex-shrink: 0;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #6e776f;
+  }
+
+  .info-value {
+    color: #2b2b2b;
+    font-weight: 400;
+  }
+
+  .info-value small {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 12px;
+    color: #777777;
+    font-weight: 300;
+  }
+
+  .addr-p {
+    margin: 0 0 6px;
+  }
+
+  .gmap-link {
+    display: inline-block;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    color: #2f3b32;
+    text-decoration: none;
+    border-bottom: 1px solid #2f3b32;
+    padding-bottom: 1px;
+  }
+
+  .info-footer-note {
+    margin: 0;
+    padding-top: 20px;
+    border-top: 1px solid #e2e2df;
+    font-size: 12.5px;
+    line-height: 1.9;
+    color: #666666;
+  }
+
+  .form-wrapper {
+    max-width: 680px;
+    margin: 20px auto 0;
+    padding: 0 20px;
+  }
+
+  .flow-section {
+    margin-bottom: 44px;
+  }
+
+  .flow-heading {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: #2f3b32;
+    text-align: center;
+    margin: 0 0 24px;
+  }
+
+  .flow-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .flow-item {
+    border: 1px solid #eaeae7;
+    background: #fcfcfb;
+    padding: 18px 22px;
+  }
+
+  .flow-item-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .flow-step-num {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #6e776f;
+    letter-spacing: 0.08em;
+  }
+
+  .flow-step-title {
+    font-family: "Shippori Mincho", serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #2b2b2b;
+  }
+
+  .flow-item-desc {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.75;
+    color: #666666;
+  }
+
+  .form-card {
+    border: 1px solid #e5e5e2;
+    background: #ffffff;
+    padding: 32px 24px;
+  }
+
+  @media (min-width: 768px) {
+    .form-card {
+      padding: 40px 36px;
+    }
+  }
+
+  .form-block {
+    padding-bottom: 28px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #ecece9;
+  }
+
+  .form-block:last-of-type {
+    border-bottom: none;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+  }
+
+  .block-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .block-label {
+    font-family: "Shippori Mincho", serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2b2b2b;
+  }
+
+  .req-pill {
+    background: #9e473b;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 2px 7px;
+  }
+
+  .opt-pill {
+    background: #ecece9;
+    color: #666666;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 2px 7px;
+  }
+
+  .field-label-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .step-sub {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #6e776f;
+    margin: 0 0 8px;
+  }
+
+  .step-help {
+    font-size: 12.5px;
+    color: #666666;
+    margin: 0 0 18px;
+    line-height: 1.65;
+  }
+
+  .cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .cal-nav-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid #e0e0dc;
+    background: #ffffff;
+    color: #2b2b2b;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .cal-title {
+    font-family: "Shippori Mincho", serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
+  .cal-weekdays,
+  .cal-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    gap: 4px;
+  }
+
+  .cal-weekdays {
+    font-size: 12px;
+    color: #777777;
+    margin-bottom: 8px;
+  }
+
+  :global(.cal-day) {
+    height: 46px;
+    border: 1px solid transparent;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    color: #2b2b2b;
+    padding: 0;
+    transition: background-color 0.2s ease;
+  }
+
+  :global(.cal-day.today) {
+    border-color: #9aa39b;
+  }
+
+  :global(.cal-day.selected) {
+    background: #2f3b32;
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  :global(.cal-day.disabled) {
+    color: #c4c4c0;
+    cursor: not-allowed;
+  }
+
+  :global(.cal-day .closed-tag) {
+    font-size: 9px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .cal-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 11px;
+    color: #666666;
+    margin-top: 14px;
+  }
+
+  .lg-box {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  .lg-box.is-open {
+    border: 1px solid #cccccc;
+    background: #ffffff;
+  }
+
+  .lg-box.is-closed {
+    border: 1px dashed #cccccc;
+    background: #f5f5f3;
+  }
+
+  .lg-box.is-selected {
+    background: #2f3b32;
+  }
+
+  .time-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .time-btn {
+    padding: 13px;
+    border: 1px solid #dcdcd8;
+    background: #ffffff;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: #2b2b2b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .time-btn.active {
+    background: #2f3b32;
+    color: #ffffff;
+    border-color: #2f3b32;
+  }
+
+  .select-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .input-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .field-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .field-col label {
+    font-size: 12px;
+    color: #666666;
+  }
+
+  .field-col input,
+  .field-col select {
+    padding: 12px 14px;
+    border: 1px solid #dcdcd8;
+    background: #ffffff;
+    font-size: 14px;
+    color: #2b2b2b;
+    font-family: inherit;
+  }
+
+  .form-msg {
+    font-size: 13px;
+    text-align: center;
+    margin: 0 0 16px;
+    min-height: 20px;
+  }
+
+  .form-msg.error {
+    color: #9e473b;
+  }
+
+  .form-msg.success {
+    color: #2f3b32;
+    font-weight: 500;
+  }
+
+  .submit-action {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    background: #2f3b32;
+    color: #ffffff;
+    font-family: "Shippori Mincho", serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .submit-action:hover {
+    opacity: 0.9;
+  }
+
+  .submit-action:disabled {
+    opacity: 0.5;
+    cursor: wait;
+  }
+</style>
+
+<script is:inline>
+  // --- 0. スクロール連動のゆったり横フェードイン演出 ---
+  const revealTargets = document.querySelectorAll(".reveal-side, .reveal-side-right");
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    revealTargets.forEach((el) => observer.observe(el));
+  } else {
+    revealTargets.forEach((el) => el.classList.add("is-visible"));
+  }
+
+  // --- 1. クロスフェード自動切り替えギャラリー（14枚対応） ---
+  const slides = document.querySelectorAll("#fadeStage .fade-slide");
+  const dots = document.querySelectorAll("#fadeDots .dot");
+  const counterCurrent = document.getElementById("counterCurrent");
+  let currentSlide = 0;
+  let fadeTimer = null;
+
+  function showFadeSlide(index) {
+    if (slides.length === 0) return;
+    const total = slides.length;
+    currentSlide = (index + total) % total;
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("is-active", i === currentSlide);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("is-active", i === currentSlide);
+    });
+    if (counterCurrent) {
+      counterCurrent.textContent = String(currentSlide + 1);
+    }
+  }
+
+  function startFadeTimer() {
+    stopFadeTimer();
+    fadeTimer = setInterval(() => {
+      showFadeSlide(currentSlide + 1);
+    }, 4500);
+  }
+
+  function stopFadeTimer() {
+    if (fadeTimer) {
+      clearInterval(fadeTimer);
+      fadeTimer = null;
+    }
+  }
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      const idx = Number(dot.dataset.index || 0);
+      showFadeSlide(idx);
+      startFadeTimer();
+    });
+  });
+
+  startFadeTimer();
+
+  // --- 2. カレンダー生成 ---
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let viewYear = today.getFullYear();
+  let viewMonth = today.getMonth();
+  let selectedDateStr = "";
+
+  const calMonthLabel = document.getElementById("calMonthLabel");
+  const calendarGrid = document.getElementById("calendarGrid");
+  const selectedDateInput = document.getElementById("selectedDate");
+
+  function formatDate(y, m, d) {
+    return `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  }
+
+  function renderCalendar() {
+    if (!calendarGrid || !calMonthLabel) return;
+    calMonthLabel.textContent = `${viewYear}年 ${viewMonth + 1}月`;
+    calendarGrid.innerHTML = "";
+
+    const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+    const lastDate = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+    Array.from({ length: firstDay }).forEach(() => {
+      calendarGrid.appendChild(document.createElement("div"));
+    });
+
+    Array.from({ length: lastDate }, (_, idx) => idx + 1).forEach((d) => {
+      const cellDate = new Date(viewYear, viewMonth, d);
+      const dayOfWeek = cellDate.getDay();
+      const isClosed = dayOfWeek === 2 || dayOfWeek === 3;
+      const isPast = today.getTime() > cellDate.getTime();
+      const dateStr = formatDate(viewYear, viewMonth, d);
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "cal-day";
+      if (cellDate.getTime() === today.getTime()) btn.classList.add("today");
+      if (dateStr === selectedDateStr) btn.classList.add("selected");
+
+      const numSpan = document.createElement("span");
+      numSpan.textContent = String(d);
+      btn.appendChild(numSpan);
+
+      if (isClosed || isPast) {
+        btn.classList.add("disabled");
+        btn.disabled = true;
+        if (isClosed) {
+          const closedSpan = document.createElement("span");
+          closedSpan.className = "closed-tag";
+          closedSpan.textContent = "定休日";
+          btn.appendChild(closedSpan);
+        }
+      } else {
+        btn.addEventListener("click", () => {
+          selectedDateStr = dateStr;
+          if (selectedDateInput) selectedDateInput.value = dateStr;
+          renderCalendar();
+        });
+      }
+
+      calendarGrid.appendChild(btn);
+    });
+  }
+
+  const prevMonthBtn = document.getElementById("prevMonth");
+  const nextMonthBtn = document.getElementById("nextMonth");
+
+  if (prevMonthBtn) {
+    prevMonthBtn.addEventListener("click", () => {
+      viewMonth -= 1;
+      if (viewMonth === -1) {
+        viewMonth = 11;
+        viewYear -= 1;
+      }
+      renderCalendar();
+    });
+  }
+
+  if (nextMonthBtn) {
+    nextMonthBtn.addEventListener("click", () => {
+      viewMonth += 1;
+      if (viewMonth === 12) {
+        viewMonth = 0;
+        viewYear += 1;
+      }
+      renderCalendar();
+    });
+  }
+
+  renderCalendar();
+
+  // --- 3. 時間選択 ---
+  const timeButtons = document.querySelectorAll("#timeChoices .time-btn");
+  const selectedTimeInput = document.getElementById("selectedTime");
+
+  timeButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      timeButtons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      if (selectedTimeInput) selectedTimeInput.value = btn.dataset.value || "";
+    });
+  });
+
+  // --- 4. フォーム送信（電話番号は任意） ---
+  const form = document.getElementById("reservationForm");
+  const formMessage = document.getElementById("formMessage");
+  const submitBtn = document.getElementById("submitBtn");
+
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!formMessage || !submitBtn) return;
+
+      const formData = new FormData(form);
+      const payload = {
+        date: String(formData.get("date") || ""),
+        time: String(formData.get("time") || ""),
+        party: String(formData.get("party") || ""),
+        seat: String(formData.get("seat") || ""),
+        name: String(formData.get("name") || "").trim(),
+        email: String(formData.get("email") || "").trim(),
+        phone: String(formData.get("phone") || "").trim(),
+      };
+
+      if (!payload.date || !payload.time || !payload.name || !payload.email) {
+        formMessage.textContent = "ご希望日・ご来店時間・お名前・メールアドレスを入力してください。";
+        formMessage.className = "form-msg error";
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "送信中...";
+      formMessage.textContent = "";
+
+      try {
+        const res = await fetch("/api/reserve", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "送信に失敗しました。");
+        }
+
+        formMessage.textContent = "ご予約リクエストを送信しました！確認メールをお送りしましたのでご確認ください。";
+        formMessage.className = "form-msg success";
+        form.reset();
+        selectedDateStr = "";
+        if (selectedDateInput) selectedDateInput.value = "";
+        if (selectedTimeInput) selectedTimeInput.value = "";
+        timeButtons.forEach((b) => b.classList.remove("active"));
+        renderCalendar();
+      } catch (err) {
+        formMessage.textContent = err.message || "送信中にエラーが発生しました。";
+        formMessage.className = "form-msg error";
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "この内容で予約希望を送る";
+      }
+    });
+  }
+</script>

@@ -1,0 +1,45 @@
+{
+  "name": "wix-astro-blank",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "astro": "astro",
+    "dev": "wix dev",
+    "build": "wix build",
+    "wix": "wix",
+    "preview": "wix preview",
+    "release": "wix release",
+    "generate": "wix generate",
+    "env": "wix env",
+    "skills": "wix skills"
+  },
+  "dependencies": {
+    "@astrojs/vercel": "^11.0.22",
+    "@tailwindcss/vite": "^4.1.7",
+    "@wix/astro": "^3.0.0",
+    "@wix/astro-pages": "^3.0.0",
+    "@wix/auto_sdk_ecom_cart-v-2": "^1.0.192",
+    "@wix/bookings": "^1.0.1650",
+    "@wix/dashboard": "^1.3.43",
+    "@wix/essentials": "^1.0.6",
+    "@wix/forms": "^1.0.500",
+    "@wix/redirects": "^1.0.125",
+    "@wix/sdk": "^1.21.5",
+    "@wix/seo": "^1.0.79",
+    "astro": "^7.3.2",
+    "nodemailer": "^10.6.0",
+    "resend": "^6.38.1",
+    "tailwindcss": "^4.1.7",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@astrojs/react": "^6.0.6",
+    "@types/nodemailer": "^8.0.2",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@wix/astro-wix-hosting-adapter": "^3.0.0",
+    "@wix/cli": "^1.1.92",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
