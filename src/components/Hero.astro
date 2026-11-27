@@ -1285,7 +1285,7 @@ const gallerySlides = Array.from({ length: 14 }, (_, i) => {
           throw new Error(data.error || "送信に失敗しました。");
         }
 
-        formMessage.textContent = "ご予約リクエストを送信しました！確認メールをお送りしましたのでご確認ください。<br><span style="font-size: 0.85em; color: #666; display: inline-block; margin-top: 4px;">※自動返信メールが迷惑メールフォルダに振り分けられる場合がございます。届かない場合はそちらもあわせてご確認ください。</span>";
+        formMessage.textContent = statusEl.innerHTML = `ご予約リクエストを送信しました！確認メールをお送りしましたのでご確認ください。<br><span style="font-size: 0.85em; color: #666; display: inline-block; margin-top: 4px;">※自動返信メールが迷惑メールフォルダに振り分けられる場合がございます。届かない場合はそちらもあわせてご確認ください。</span>`;
         formMessage.className = "form-msg success";
         form.reset();
         selectedDateStr = "";
