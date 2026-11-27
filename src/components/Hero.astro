@@ -1250,7 +1250,7 @@ const gallerySlides = Array.from({ length: 14 }, (_, i) => {
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if (!formMessage || !submitBtn) return;
+      if (!formMessage) return;
 
       const formData = new FormData(form);
       const payload = {
