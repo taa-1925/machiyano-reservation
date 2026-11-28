@@ -1,4 +1,6 @@
 ---
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
+
 const gallerySlides = Array.from({ length: 14 }, (_, i) => {
   const num = i + 1;
   const fallbacks = [
@@ -24,6 +26,9 @@ const gallerySlides = Array.from({ length: 14 }, (_, i) => {
   href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;600&display=swap"
   rel="stylesheet"
 />
+{turnstileSiteKey && (
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+)}
 
 <div class="machiya-root">
   <!-- 1. 最上部メインヒーロー -->
@@ -294,6 +299,12 @@ const gallerySlides = Array.from({ length: 14 }, (_, i) => {
 
         <p id="formMessage" class="form-msg" role="alert"></p>
 
+        {turnstileSiteKey && (
+          <div class="turnstile-wrap">
+            <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light"></div>
+          </div>
+        )}
+
         <button type="submit" class="submit-action" id="submitBtn">
           この内容で予約希望を送る
         </button>
@@ -321,7 +332,6 @@ const gallerySlides = Array.from({ length: 14 }, (_, i) => {
     -webkit-font-smoothing: antialiased;
   }
 </style>
-
 
 <style>
   .machiya-root {
@@ -1047,6 +1057,12 @@ const gallerySlides = Array.from({ length: 14 }, (_, i) => {
     font-weight: 500;
   }
 
+  .turnstile-wrap {
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: center;
+  }
+
   .submit-action {
     width: 100%;
     padding: 16px;
@@ -1242,7 +1258,7 @@ const gallerySlides = Array.from({ length: 14 }, (_, i) => {
     });
   });
 
-  // --- 4. フォーム送信（電話番号は任意） ---
+  // --- 4. フォーム送信（電話番号は任意・Turnstileトークン送信対応） ---
   const form = document.getElementById("reservationForm");
   const formMessage = document.getElementById("formMessage");
   const submitBtn = document.getElementById("submitBtn");
@@ -1261,6 +1277,7 @@ const gallerySlides = Array.from({ length: 14 }, (_, i) => {
         name: String(formData.get("name") || "").trim(),
         email: String(formData.get("email") || "").trim(),
         phone: String(formData.get("phone") || "").trim(),
+        turnstileToken: String(formData.get("cf-turnstile-response") || ""),
       };
 
       if (!payload.date || !payload.time || !payload.name || !payload.email) {
@@ -1293,6 +1310,7 @@ const gallerySlides = Array.from({ length: 14 }, (_, i) => {
         if (selectedTimeInput) selectedTimeInput.value = "";
         timeButtons.forEach((b) => b.classList.remove("active"));
         renderCalendar();
+        if (window.turnstile) window.turnstile.reset();
       } catch (err) {
         formMessage.textContent = err.message || "送信中にエラーが発生しました。";
         formMessage.className = "form-msg error";
